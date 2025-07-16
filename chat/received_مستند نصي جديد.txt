@@ -1,0 +1,508 @@
+اريد تعديل الكودين بحيث تضهر الرسائل على txtPaneChat  بشكل منسق يشبه واتساب وليس على txtarea مع العلم انا استخدم java swing مع سحب وافلات في بيئه netbeans والاداه txtPaneChat قمت باضافتها انا اريدك فقط تعير لي التنسيق داخل الاداه حتى لايتشوه تصميمي 
+لااريد تعقيد في الكود فقط داله تخبرني باضافتها وين واي تعديل افعله على الكود انا
+public class chat_server extends javax.swing.JFrame {
+
+  
+    static ServerSocket sss;
+    static Socket ss;
+    static DataInputStream din;
+    static DataOutputStream dout;
+    video_server vs= new video_server();
+    
+    public chat_server() {
+        initComponents();
+        msg_text.requestFocus();
+        video_chat.setVisible(false);
+    }
+
+  
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    private void initComponents() {
+
+        jScrollPane1 = new javax.swing.JScrollPane();
+        msg_area = new javax.swing.JTextArea();
+        msg_text = new javax.swing.JTextField();
+        msg_send = new javax.swing.JButton();
+        video_chat = new javax.swing.JButton();
+        btnVoiceServer = new javax.swing.JButton();
+        btnVoiceServerMax = new javax.swing.JButton();
+        btnEndCall = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtPaneChat = new javax.swing.JTextPane();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("server");
+        setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
+
+        msg_area.setColumns(20);
+        msg_area.setRows(5);
+        jScrollPane1.setViewportView(msg_area);
+
+        msg_text.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                msg_textActionPerformed(evt);
+            }
+        });
+
+        msg_send.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sent_48px.png"))); // NOI18N
+        msg_send.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                msg_sendActionPerformed(evt);
+            }
+        });
+
+        video_chat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_video_call_40px.png"))); // NOI18N
+        video_chat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                video_chatActionPerformed(evt);
+            }
+        });
+
+        btnVoiceServer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_call_40px.png"))); // NOI18N
+        btnVoiceServer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoiceServerActionPerformed(evt);
+            }
+        });
+
+        btnVoiceServerMax.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_video_call_40px.png"))); // NOI18N
+        btnVoiceServerMax.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoiceServerMaxActionPerformed(evt);
+            }
+        });
+
+        btnEndCall.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_call_30px_1.png"))); // NOI18N
+        btnEndCall.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEndCallActionPerformed(evt);
+            }
+        });
+
+        jScrollPane2.setViewportView(txtPaneChat);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(msg_text, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(msg_send, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(video_chat, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEndCall, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnVoiceServerMax, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnVoiceServer, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(96, 96, 96))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(video_chat, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                        .addComponent(btnEndCall)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnVoiceServer, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnVoiceServerMax, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(30, 30, 30))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(msg_send, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(msg_text))
+                .addGap(28, 28, 28))
+        );
+
+        pack();
+    }// </editor-fold>                        
+
+    private void msg_textActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        // TODO add your handling code here:
+    }                                        
+
+
+    
+    
+    private void msg_sendActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        // TODO add your handling code here:
+        
+        try {
+            String msgout;
+            msgout=msg_text.getText().trim();
+            dout.writeUTF(msgout);
+        } catch (IOException ex) {
+           
+        }
+                msg_text.setText("");
+
+    }                                        
+
+    private void video_chatActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        // TODO add your handling code here:
+        try {
+//            close();
+            vs.runn1();
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(chat_server.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }                                          
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {                                  
+        // TODO add your handling code here:
+        this.setBounds(800, 300, 450, 400);
+    }                                 
+
+    private void btnVoiceServerActionPerformed(java.awt.event.ActionEvent evt) {                                               
+        // TODO add your handling code here:
+        chat_video.VoiceServer vos=new VoiceServer();
+        vos.setVisible(true);
+        vos.vvvvvv();
+        
+    }                                              
+        chat_video.VoiceServer vos=new VoiceServer();
+
+    private void btnVoiceServerMaxActionPerformed(java.awt.event.ActionEvent evt) {                                                  
+        // TODO add your handling code here:
+      //  vs.setVisible(true);
+       // vs.vvvvvv();
+        try {
+//            close();
+            vs.runn1();
+            vos.vvvvvv();
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(chat_server.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }                                                 
+
+    private void btnEndCallActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        // TODO add your handling code here:
+        vos.endCall();
+        vs.endVideoCall();
+
+    }                                          
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) throws IOException {
+  
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new chat_server().setVisible(true);
+            }
+        });
+        
+        String msgin="";
+
+            sss=new ServerSocket(1201); //server starts at 1201 port number
+            ss= sss.accept(); // server will accept the connection
+            din= new DataInputStream(ss.getInputStream());
+            dout=new DataOutputStream(ss.getOutputStream());
+            
+            while(!msgin.equals("exit")){
+               msgin=din.readUTF();
+               msg_area.setText(msg_area.getText().trim()+"\n Client: "+msgin);  //displaying the message from client
+            }
+
+    }
+    // Variables declaration - do not modify                     
+    private javax.swing.JButton btnEndCall;
+    private javax.swing.JButton btnVoiceServer;
+    private javax.swing.JButton btnVoiceServerMax;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private static javax.swing.JTextArea msg_area;
+    private javax.swing.JButton msg_send;
+    private javax.swing.JTextField msg_text;
+    private javax.swing.JTextPane txtPaneChat;
+    private javax.swing.JButton video_chat;
+    // End of variables declaration                   
+}
+
+
+public class chat_client extends javax.swing.JFrame {
+
+    /**
+     * Creates new form chat_client
+     */
+    static Socket ss;
+    static DataInputStream din;
+    static DataOutputStream dout;
+    video_client vc = new video_client();
+
+
+    public chat_client() {
+        initComponents();
+         video_chat.setVisible(false);
+        msg_text.requestFocus();
+
+    }
+
+ 
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    private void initComponents() {
+
+        jScrollPane1 = new javax.swing.JScrollPane();
+        msg_area = new javax.swing.JTextArea();
+        msg_text = new javax.swing.JTextField();
+        msg_send = new javax.swing.JButton();
+        video_chat = new javax.swing.JButton();
+        btnVoiceChat = new javax.swing.JButton();
+        video_chatMax = new javax.swing.JButton();
+        btnEndCall = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtPaneChat = new javax.swing.JTextPane();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("client");
+        setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
+
+        msg_area.setEditable(false);
+        msg_area.setColumns(20);
+        msg_area.setRows(5);
+        jScrollPane1.setViewportView(msg_area);
+
+        msg_send.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sent_48px.png"))); // NOI18N
+        msg_send.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                msg_sendActionPerformed(evt);
+            }
+        });
+
+        video_chat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_video_call_40px.png"))); // NOI18N
+        video_chat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                video_chatActionPerformed(evt);
+            }
+        });
+
+        btnVoiceChat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_call_40px.png"))); // NOI18N
+        btnVoiceChat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoiceChatActionPerformed(evt);
+            }
+        });
+
+        video_chatMax.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_video_call_40px.png"))); // NOI18N
+        video_chatMax.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                video_chatMaxActionPerformed(evt);
+            }
+        });
+
+        btnEndCall.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_call_30px_1.png"))); // NOI18N
+        btnEndCall.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEndCallActionPerformed(evt);
+            }
+        });
+
+        jScrollPane2.setViewportView(txtPaneChat);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(msg_text, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(msg_send, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(video_chatMax, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(video_chat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnEndCall, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnVoiceChat)))
+                .addGap(56, 56, 56))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(video_chat, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addComponent(btnEndCall)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnVoiceChat, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(video_chatMax, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(msg_send, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(msg_text, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28))
+        );
+
+        video_chat.getAccessibleContext().setAccessibleName("video chat");
+
+        pack();
+    }// </editor-fold>                        
+
+    private void msg_sendActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        
+
+        try {
+            String msgout;
+            msgout = msg_text.getText().trim();
+            dout.writeUTF(msgout);
+        } catch (Exception ex) {
+
+        }
+        msg_text.setText("");
+    }                                        
+
+    private void video_chatActionPerformed(java.awt.event.ActionEvent evt) {                                           
+      
+       try {
+//            close();
+            vc.runn2();
+
+            
+            
+        } catch (IOException ex) {
+            Logger.getLogger(chat_client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }                                          
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {                                  
+    
+        this.setBounds(300, 300, 450, 400);
+
+    }                                 
+
+    private void btnVoiceChatActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        // TODO add your handling code here:
+
+        chat_video.VoiceClient voc = new VoiceClient();
+        voc.setVisible(true);
+        voc.vvvvvv();
+
+
+    }                                            
+    chat_video.VoiceClient voc = new VoiceClient();
+
+    private void video_chatMaxActionPerformed(java.awt.event.ActionEvent evt) {                                              
+        
+        video_chatMax.setVisible(false);
+        try {
+//            close();
+
+            vc.runn2();
+            voc.vvvvvv();
+
+        } catch (IOException ex) {
+            Logger.getLogger(chat_client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }                                             
+
+    private void btnEndCallActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        // TODO add your handling code here:
+        voc.endCall();
+        vc.endVideoCall();
+
+    }                                          
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) throws IOException {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(chat_client.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(chat_client.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(chat_client.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(chat_client.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new chat_client().setVisible(true);
+            }
+        });
+
+        ss = new Socket("localhost", 1201); //the ip address in local address because i am running client and server at the same computer
+        din = new DataInputStream(ss.getInputStream());
+        dout = new DataOutputStream(ss.getOutputStream());
+        String msgin = "";
+        while (!msgin.equals("exit")) {
+            msgin = din.readUTF();
+            msg_area.setText(msg_area.getText().trim() + "\n server: " + msgin);  //displaying the message from server
+        }
+
+    }
+
+    // Variables declaration - do not modify                     
+    private javax.swing.JButton btnEndCall;
+    private javax.swing.JButton btnVoiceChat;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private static javax.swing.JTextArea msg_area;
+    private javax.swing.JButton msg_send;
+    private javax.swing.JTextField msg_text;
+    private javax.swing.JTextPane txtPaneChat;
+    private javax.swing.JButton video_chat;
+    private javax.swing.JButton video_chatMax;
+    // End of variables declaration                   
+}   
+
